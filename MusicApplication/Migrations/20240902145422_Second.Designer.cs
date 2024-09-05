@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MusicApplication.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240806202738_Initial")]
-    partial class Initial
+    [Migration("20240902145422_Second")]
+    partial class Second
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,7 +34,6 @@ namespace MusicApplication.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Cover")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Description")
@@ -64,10 +63,10 @@ namespace MusicApplication.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("ProfilePictureUrl")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -107,7 +106,6 @@ namespace MusicApplication.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("ProfilePictureUrl")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
@@ -133,6 +131,10 @@ namespace MusicApplication.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Download")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("Genre")
                         .HasColumnType("integer");
 
@@ -146,9 +148,6 @@ namespace MusicApplication.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<double>("Price")
-                        .HasColumnType("double precision");
 
                     b.HasKey("Id");
 

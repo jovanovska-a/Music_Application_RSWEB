@@ -1,5 +1,105 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model Artist
+
 @{
+    ViewData["Title"] = "Edit Artist";
 }
+
+<div class="container">
+    <div class="row text-white">
+        <div class="col-md-8 offset-md-2" style="margin-top: 30px; margin-bottom: 10px;">
+            <h4 class="text-purple" style="font-size: 1.5rem;">Edit Artist</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.ProfilePictureUrl)
+
+                <div class="form-group mb-3">
+                    <img id="ProfilePicturePreview" style="width: 300px; height: 250px;" />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="CoverUrl" class="control-label text-purple"></label>
+                    <input asp-for="CoverUrl" class="form-control bg-lighter-dark text-white border-purple" />
+                    <span asp-validation-for="CoverUrl" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="FullName" class="control-label text-purple"></label>
+                    <input asp-for="FullName" class="form-control bg-lighter-dark text-white border-purple" />
+                    <span asp-validation-for="FullName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Bio" class="control-label text-purple"></label>
+                    <input asp-for="Bio" class="form-control bg-lighter-dark text-white border-purple" />
+                    <span asp-validation-for="Bio" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-purple float-right d-flex align-items-center justify-content-center px-4 py-2">
+                        <i class="bi bi-save me-1"></i> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var output = document.getElementById('ProfilePicturePreview');
+            output.src = $("#ProfilePictureUrl").val();
+        });
+        $("#ProfilePictureUrl").on("change", function () {
+            var output = document.getElementById('ProfilePicturePreview');
+            output.src = $(this).val();
+        });
+    </script>
+}
+
+<style>
+    body {
+        background-color: #F3F4F8;
+    }
+
+    .text-purple {
+        color: #6C5B7B; /* Lighter purple */
+        margin-bottom: 3px;
+        font-size: 1.1rem;
+    }
+
+    .form-control.bg-lighter-dark {
+        background-color: #555;
+        border-color: #6C5B7B; /* Lighter purple */
+        color: #FFF;
+    }
+
+    .btn-purple {
+        background-color: #6C5B7B; /* Lighter purple */
+        border-color: #6C5B7B; /* Lighter purple */
+        color: white;
+        border-radius: 10px;
+        padding: 10px 20px; /* Increased padding */
+    }
+
+        .btn-purple:hover {
+            background-color: #8A6D8E; /* Slightly lighter on hover */
+            color: #FFF;
+        }
+
+    .border-purple {
+        border-color: #6C5B7B; /* Lighter purple */
+    }
+
+    .form-group.mb-3 {
+        margin-bottom: 1rem; /* Margin for spacing between form groups */
+    }
+</style>
+

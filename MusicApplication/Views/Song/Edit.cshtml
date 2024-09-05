@@ -1,5 +1,150 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using MusicApplication.Data.Enums
+@using MusicApplication.ViewModels
+@model EditSongViewModel
+
 @{
+    ViewData["Title"] = "Edit Song";
 }
+
+<div class="container">
+    <div class="row text-white">
+        <div class="col-md-8 offset-md-2" style="margin-top: 30px; margin-bottom: 10px;">
+            <h4 class="text-purple">Edit Song</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.ImageUrl)
+
+                <div class="form-group mb-3">
+                    <img id="ProfilePicturePreview" style="width: 200px; height: 200px;" />
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Image" class="control-label text-purple"></label>
+                    <input asp-for="Image" class="form-control bg-lighter-dark text-white border-purple" />
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="control-label text-purple"></label>
+                    <input asp-for="Name" class="form-control bg-lighter-dark text-white border-purple" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Description" class="control-label text-purple"></label>
+                    <input asp-for="Description" class="form-control bg-lighter-dark text-white border-purple" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Date" class="control-label text-purple"></label>
+                    <input asp-for="Date" type="date" class="form-control bg-lighter-dark text-white border-purple" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Genre" class="text-purple"></label>
+                    <select asp-for="Genre" asp-items="@Html.GetEnumSelectList<SongGenre>()" class="form-control bg-lighter-dark text-white border-purple">
+                        <option>--Select--</option>
+                    </select>
+                    <span asp-validation-for="Genre" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="AlbumId" class="text-purple">Album</label>
+                    <select asp-for="AlbumId" class="form-control bg-lighter-dark text-white border-purple">
+                        <option selected="selected">--Select--</option>
+                        @foreach (var album in Model.Album)
+                        {
+                            <option value="@album.Id">@album.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="AlbumId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="MusicHouseId" class="text-purple">Music House</label>
+                    <select asp-for="MusicHouseId" class="form-control bg-lighter-dark text-white border-purple">
+                        <option selected="selected">--Select--</option>
+                        @foreach (var musicHouse in Model.MusicHouse)
+                        {
+                            <option value="@musicHouse.Id">@musicHouse.Name</option>
+                        }
+                    </select>
+                    <span asp-validation-for="MusicHouseId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="ArtistIds" class="text-purple">Artists:</label>
+                    <select asp-for="ArtistIds" class="form-control bg-lighter-dark text-white border-purple" multiple>
+                        @foreach (var artist in Model.Artists)
+                        {
+                            <option value="@artist.Id">@artist.FullName</option>
+                        }
+                    </select>
+                    <span asp-validation-for="ArtistIds" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-purple btn-sm float-right d-flex align-items-center justify-content-center px-4 py-2">
+                        <i class="bi bi-save me-1"></i> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            var output = document.getElementById('ProfilePicturePreview');
+            output.src = $("#ImageUrl").val();
+        });
+        $("#ImageUrl").on("change", function () {
+            var output = document.getElementById('ProfilePicturePreview');
+            output.src = $(this).val();
+        });
+    </script>
+}
+
+<style>
+    body {
+        background-color: #F3F4F8;
+    }
+
+    .text-purple {
+        color: #6C5B7B; /* Lighter purple */
+        margin-bottom: 3px;
+    }
+
+    .form-control.bg-lighter-dark {
+        background-color: #555;
+        border-color: #6C5B7B; /* Lighter purple */
+        color: #FFF;
+    }
+
+    .btn-purple {
+        background-color: #6C5B7B; /* Lighter purple */
+        border-color: #6C5B7B; /* Lighter purple */
+        color: white;
+        border-radius: 10px;
+        padding: 10px 20px; /* Increased padding */
+    }
+
+        .btn-purple:hover {
+            background-color: #8A6D8E; /* Slightly lighter on hover */
+            color: #FFF;
+        }
+
+    .border-purple {
+        border-color: #6C5B7B; /* Lighter purple */
+    }
+</style>
