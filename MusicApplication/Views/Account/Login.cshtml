@@ -1,0 +1,91 @@
+﻿@using MusicApplication.ViewModels
+@model LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container">
+    <div class="row text-white">
+        <div class="col-md-6 offset-md-3" style="margin-top: 30px; margin-bottom: 10px;">
+            <h4 class="text-purple" style="font-size: 1.5rem;">Log in to your account</h4>
+        </div>
+    </div>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="col-md-6 offset-md-3 alert alert-danger">
+            <span><b>Sorry!</b> - @TempData["Error"]</span>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form asp-action="Login">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="EmailAddress" class="control-label text-purple">Email Address</label>
+                    <input asp-for="EmailAddress" class="form-control bg-lighter-dark text-white border-purple" />
+                    <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mb-3">
+                    <label asp-for="Password" class="control-label text-purple">Password</label>
+                    <input asp-for="Password" class="form-control bg-lighter-dark text-white border-purple" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-purple float-right d-flex align-items-center justify-content-center px-4 py-2">
+                        Log in
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #F3F4F8;
+    }
+
+    .text-purple {
+        color: #6C5B7B; /* Lighter purple */
+        margin-bottom: 3px;
+        font-size: 1.1rem;
+    }
+
+    .form-control.bg-lighter-dark {
+        background-color: #444;
+        border-color: #6C5B7B; /* Lighter purple */
+        color: #FFF;
+    }
+
+    .btn-purple {
+        background-color: #6C5B7B; /* Lighter purple */
+        border-color: #6C5B7B; /* Lighter purple */
+        color: white;
+        border-radius: 10px;
+        padding: 10px 20px;
+    }
+
+        .btn-purple:hover {
+            background-color: #8A6D8E; /* Slightly lighter on hover */
+            color: #FFF;
+        }
+
+    .border-purple {
+        border-color: #6C5B7B; /* Lighter purple */
+    }
+
+    .form-group.mb-3 {
+        margin-bottom: 1rem;
+    }
+
+    .alert-danger {
+        background-color: #d9534f;
+        border-color: #d43f3a;
+        color: white;
+    }
+</style>

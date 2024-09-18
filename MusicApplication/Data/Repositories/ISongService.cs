@@ -11,5 +11,6 @@ namespace MusicApplication.Data.Repositories
         Task<Song> UpdateAsync(int id, Song song);
         Task DeleteAsync(int id);
         Task<Song>GetLastSong();
+        Task<List<int>> GetSongByAlbumIdAsync(int albumId);
     }
 }

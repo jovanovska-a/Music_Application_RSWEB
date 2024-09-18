@@ -10,10 +10,13 @@
             <div class="card bg-dark text-white border-purple shadow-lg">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h2 class="text-purple mb-0">@Model.Name</h2>
-                    <div class="d-flex">
-                        <a class="btn btn-outline-success me-2" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-                        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
-                    </div>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                    {
+                        <div class="d-flex">
+                            <a class="btn btn-outline-success me-2" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                            <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+                        </div>
+                    }
                 </div>
                 <div class="card-body" style="padding: 25px; padding-bottom: 0px;">
                     <div class="row">
@@ -38,9 +41,7 @@
                 </div>
                 <div class="card-footer d-flex justify-content-between" style="padding: 25px;">
                     <a class="btn btn-outline-secondary" asp-action="Index">Show All Songs</a>
-                    <a class="btn btn-purple d-flex align-items-center justify-content-center" style="width: 130px;">
-                        <i class="bi bi-cart-plus me-1"></i> Add to Cart
-                    </a>
+                    <a class="btn btn-outline-secondary d-flex align-items-center justify-content-center" asp-route-id="@Model.Id" asp-action="Index" asp-controller="Review">Reviews</a>
                 </div>
             </div>
         </div>

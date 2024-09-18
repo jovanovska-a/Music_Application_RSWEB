@@ -18,9 +18,13 @@ namespace MusicApplication.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
             var albums = await _service.GetAllAsync();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                albums = albums.Where(n => n.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
             return View(albums);
         }
 

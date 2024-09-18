@@ -53,5 +53,13 @@ namespace MusicApplication.Data.Services
         {
             return await _context.Songs.AsNoTracking().FirstOrDefaultAsync(i => i.Id == _context.Songs.Max(i => i.Id));
         }
+
+        public async Task<List<int>> GetSongByAlbumIdAsync(int albumId)
+        {
+            return await _context.Songs.Include(n => n.Album).Include(n => n.MusicHouse).Include(n => n.Artists_Songs)
+                .Where(s => s.AlbumId == albumId)
+                .Select(s => s.Id)
+                .ToListAsync();
+        }
     }
 }

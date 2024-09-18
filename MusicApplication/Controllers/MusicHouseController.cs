@@ -17,9 +17,13 @@ namespace MusicApplication.Controllers
             _service = service;
             _webHostEnvironment = webHostEnvironment;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
             var music_houses = await _service.GetAllAsync();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                music_houses = music_houses.Where(n => n.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
             return View(music_houses);
         }
 

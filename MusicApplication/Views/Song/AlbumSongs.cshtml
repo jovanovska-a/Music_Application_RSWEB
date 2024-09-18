@@ -1,0 +1,118 @@
+﻿@model IEnumerable<Song>
+
+@{
+    ViewData["Title"] = "List of Songs";
+}
+
+<div class="container">
+    <div class="row g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-4 col-sm-6">
+                <div class="card song-card border-purple shadow-sm">
+                    <img src="@item.ImageUrl" class="card-img-top img-fluid" style="height: 360px;" alt="@item.Name">
+                    <div class="card-body" style="padding: 18px; padding-bottom: 15px;">
+                        <h5 class="card-title text-purple">
+                            @item.Name
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                            {
+                                <a asp-controller="Song" asp-action="Edit" asp-route-id="@item.Id" class="text-white float-end">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                            }
+                        </h5>
+                        <p class="card-text mb-2"><strong>Album:</strong> @item.Album.Name</p>
+                        <p style="height: 30px;" class="card-text mb-1">
+                            <strong>Artists:</strong>
+                            @for (int i = 0; i < item.Artists_Songs.Count; i++)
+                            {
+                                <span>@item.Artists_Songs[i].Artist.FullName</span>
+                                @if (i < item.Artists_Songs.Count - 1)
+                                {
+                                    <span>,  </span>
+                                }
+                            }
+                        </p>
+
+                        <span class="badge bg-success">AVAILABLE</span>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between align-items-center" style="padding-bottom: 18px;">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a class="btn btn-purple btn-sm me-2 d-flex align-items-center justify-content-center" style="width: 120px; height: 35px;">
+                                <i class="bi bi-play" style="padding-right: 5px;"></i> Download
+                            </a>
+                        }
+                        <a asp-controller="Song" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-purple btn-sm d-flex align-items-center justify-content-center" style="width: 120px; height: 35px;">
+                            <i class="bi bi-eye-fill" style="padding-right: 5px;"></i> Details
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<style>
+    body {
+        background-color: #121212;
+        color: #FFFFFF;
+    }
+
+    .text-purple {
+        color: #9B59B6;
+    }
+
+    .bg-purple, .btn-purple, .border-purple {
+        background-color: #9B59B6;
+        border-color: #9B59B6;
+    }
+
+    .btn-purple {
+        border-radius: 10px;
+        color: white;
+    }
+
+    .btn-outline-purple {
+        color: #9B59B6;
+        background-color: transparent;
+        border-color: #9B59B6;
+        border-radius: 10px;
+    }
+
+        .btn-outline-purple:hover {
+            background-color: #a064c4;
+            color: #FFFFFF;
+        }
+
+    .song-card {
+        background-color: #1C1C1C;
+        color: #FFFFFF;
+    }
+
+        .song-card img {
+            border-bottom: 3px solid #9B59B6;
+            height: 250px;
+            object-fit: cover;
+        }
+
+    .form-control.bg-dark {
+        background-color: #333;
+        border-color: #9B59B6;
+        color: #FFF;
+    }
+
+    .badge {
+        font-size: 0.85rem;
+    }
+
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .me-2 {
+        margin-right: 0.5rem;
+    }
+</style>

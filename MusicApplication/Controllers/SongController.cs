@@ -44,6 +44,13 @@ namespace MusicApplication.Controllers
             var filteredSongs = songs.Where(s => songIds.Contains(s.Id)).ToList();
             return View(filteredSongs);
         }
+        public async Task<IActionResult> AlbumSongs(int id)
+        {
+            var songIds = await _service.GetSongByAlbumIdAsync(id);
+            var songs = await _service.GetAllAsync();
+            var filteredSongs = songs.Where(s => songIds.Contains(s.Id)).ToList();
+            return View(filteredSongs);
+        }
 
         public async Task<IActionResult> Details(int id)
         {
@@ -78,7 +85,7 @@ namespace MusicApplication.Controllers
                 songVM.Album = albums;
                 songVM.MusicHouse = musicHouses;
                 songVM.Artists = artists;
-                ModelState.AddModelError("", "Failed to add book");
+                ModelState.AddModelError("", "Failed to add song");
                 return View(songVM);
             }
             var newSong = new Song()

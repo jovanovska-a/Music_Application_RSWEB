@@ -315,11 +315,14 @@ namespace MusicApplication.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AppUser")
-                        .HasColumnType("text");
+                        .IsRequired()
+                        .HasMaxLength(450)
+                        .HasColumnType("character varying(450)");
 
                     b.Property<string>("Comment")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<int?>("Rating")
                         .HasColumnType("integer");
@@ -333,7 +336,7 @@ namespace MusicApplication.Migrations
 
                     b.HasIndex("SongId");
 
-                    b.ToTable("Review");
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("MusicApplication.Models.Song", b =>
@@ -478,7 +481,9 @@ namespace MusicApplication.Migrations
                 {
                     b.HasOne("MusicApplication.Models.AppUser", "AppUserInfo")
                         .WithMany("Reviews")
-                        .HasForeignKey("AppUser");
+                        .HasForeignKey("AppUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("MusicApplication.Models.Song", "Song")
                         .WithMany("Reviews")

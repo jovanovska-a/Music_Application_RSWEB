@@ -1,0 +1,127 @@
+﻿@model IEnumerable<Song>
+
+@{
+    ViewData["Title"] = "List of Songs";
+}
+
+@if (Model.Count() == 0)
+{
+    <div style="margin: 10%;">
+        <h4 style="color: mediumpurple;">You don't have any songs yet!</h4>
+        <div>
+            <a asp-controller="Song" asp-action="Index" class="btn btn-info" style="font-size: 13px; margin-left: 24%;"><i class="bi bi-music-note"> Go Back</i></a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container">
+        <div class="row g-4">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-4 col-sm-6">
+                    <div class="card song-card border-purple shadow-sm">
+                        <img src="@item.ImageUrl" class="card-img-top img-fluid" style="height: 360px;" alt="@item.Name">
+                        <div class="card-body" style="padding: 18px; padding-bottom: 5px;">
+                            <h5 class="card-title text-purple">
+                                @item.Name
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                                {
+                                    <a asp-controller="Song" asp-action="Edit" asp-route-id="@item.Id" class="text-white float-end">
+                                        <i class="bi bi-pencil-square"></i>
+                                    </a>
+                                }
+                            </h5>
+                            <p class="card-text mb-1">
+                                <strong>Artists:</strong>
+                                @for (int i = 0; i < item.Artists_Songs.Count; i++)
+                                {
+                                    <span>@item.Artists_Songs[i].Artist.FullName</span>
+                                    @if (i < item.Artists_Songs.Count - 1)
+                                    {
+                                        <span>,  </span>
+                                    }
+                                }
+                            </p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-items-center" style="padding-bottom: 18px;">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a asp-controller="UserSong" asp-action="Delete" asp-route-id="@item.Id"  class="btn btn-purple btn-sm me-2 d-flex align-items-center justify-content-center" style="width: 120px; height: 35px;">
+                                    <i class="bi bi-x-square" style="padding-right: 5px;"></i> Remove
+                                </a>
+                            }
+                            <a asp-controller="Song" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-purple btn-sm d-flex align-items-center justify-content-center" style="width: 120px; height: 35px;">
+                                <i class="bi bi-eye-fill" style="padding-right: 5px;"></i> Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+
+<style>
+    body {
+        background-color: #121212;
+        color: #FFFFFF;
+    }
+
+    .text-purple {
+        color: #9B59B6;
+    }
+
+    .bg-purple, .btn-purple, .border-purple {
+        background-color: #9B59B6;
+        border-color: #9B59B6;
+    }
+
+    .btn-purple {
+        border-radius: 10px;
+        color: white;
+    }
+
+    .btn-outline-purple {
+        color: #9B59B6;
+        background-color: transparent;
+        border-color: #9B59B6;
+        border-radius: 10px;
+    }
+
+        .btn-outline-purple:hover {
+            background-color: #a064c4;
+            color: #FFFFFF;
+        }
+
+    .song-card {
+        background-color: #1C1C1C;
+        color: #FFFFFF;
+    }
+
+        .song-card img {
+            border-bottom: 3px solid #9B59B6;
+            height: 250px;
+            object-fit: cover;
+        }
+
+    .form-control.bg-dark {
+        background-color: #333;
+        border-color: #9B59B6;
+        color: #FFF;
+    }
+
+    .badge {
+        font-size: 0.85rem;
+    }
+
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+    }
+
+    .me-2 {
+        margin-right: 0.5rem;
+    }
+</style>

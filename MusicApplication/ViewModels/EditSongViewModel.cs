@@ -26,3 +26,4 @@ namespace MusicApplication.ViewModels
         public IEnumerable<Artist>? Artists { get; set; }
     }
 }
+

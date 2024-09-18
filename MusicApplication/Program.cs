@@ -25,13 +25,15 @@ builder.Services.AddScoped<IAlbumService, AlbumService>();
 builder.Services.AddScoped<IMusicHouseService, MusicHouseService>();
 builder.Services.AddScoped<ISongService, SongService>();
 builder.Services.AddScoped<IArtistSongService, ArtistSongService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IUserSongService, UserSongService>();
 
 var app = builder.Build();
 
 if (args.Length == 1 && args[0].ToLower() == "seeddata")
 {
-    await AppDbInitializer.SeedUsersAndRolesAsync(app);
-    //AppDbInitializer.SeedData(app);
+    //await AppDbInitializer.SeedUsersAndRolesAsync(app);
+    AppDbInitializer.SeedData(app);
 }
 
 // Configure the HTTP request pipeline.
@@ -51,6 +53,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Song}/{action=Index}/{id?}");
 
 app.Run();

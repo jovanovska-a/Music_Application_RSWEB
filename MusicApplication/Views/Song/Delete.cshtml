@@ -4,54 +4,63 @@
     ViewData["Title"] = "Delete for the song";
 }
 
-<div class="row text">
-    <div class="col-md-8 offset-2">
-        <p>
-            <h1>Delete for @Model.Name</h1>
-        </p>
-        <div class="row">
-            <div class="col-md-8 offset-2">
-                <div class="form-group text-center">
-                    <img class="border-info rounded-circle" style="max-width: 150px" id="ProfilePicturePreview" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="ImageUrl" class="control-label"></label>
-                    <input asp-for="ImageUrl" class="form-control" readonly />
+<div class="container">
+    <div class="row text-white">
+        <div class="col-md-8 offset-md-2" style="margin-top: 30px; margin-bottom: 10px;">
+            <h4 class="text-purple">Delete @Model.Name</h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="form-group text-center mb-4">
+                <img class="border-purple rounded-circle" style="max-width: 150px" id="ProfilePicturePreview" />
+            </div>
+            <form asp-action="Delete" method="post">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group mb-3">
+                    <label asp-for="ImageUrl" class="control-label text-purple" style="font-size: 1.1rem;"></label>
+                    <input asp-for="ImageUrl" class="form-control bg-lighter-dark text-white border-purple" readonly />
                     <span asp-validation-for="ImageUrl" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" readonly />
+
+                <div class="form-group mb-3">
+                    <label asp-for="Name" class="control-label text-purple" style="font-size: 1.1rem;"></label>
+                    <input asp-for="Name" class="form-control bg-lighter-dark text-white border-purple" readonly />
                     <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
-                    <input asp-for="Description" class="form-control" readonly />
+
+                <div class="form-group mb-3">
+                    <label asp-for="Description" class="control-label text-purple" style="font-size: 1.1rem;"></label>
+                    <input asp-for="Description" class="form-control bg-lighter-dark text-white border-purple" readonly />
                     <span asp-validation-for="Description" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Date" class="control-label"></label>
-                    <input asp-for="Date" class="form-control" readonly />
+
+                <div class="form-group mb-3">
+                    <label asp-for="Date" class="control-label text-purple" style="font-size: 1.1rem;"></label>
+                    <input asp-for="Date" type="date" class="form-control bg-lighter-dark text-white border-purple" readonly />
                     <span asp-validation-for="Date" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Genre" class="control-label"></label>
-                    <input asp-for="Genre" class="form-control" readonly />
+
+                <div class="form-group mb-3">
+                    <label asp-for="Genre" class="control-label text-purple" style="font-size: 1.1rem;"></label>
+                    <input asp-for="Genre" class="form-control bg-lighter-dark text-white border-purple" readonly />
                     <span asp-validation-for="Genre" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="MusicHouse.Name" class="control-label"></label>
-                    <input asp-for="MusicHouse.Name" class="form-control" readonly />
+
+                <div class="form-group mb-3">
+                    <label asp-for="MusicHouse.Name" class="control-label text-purple" style="font-size: 1.1rem;"></label>
+                    <input asp-for="MusicHouse.Name" class="form-control bg-lighter-dark text-white border-purple" readonly />
                     <span asp-validation-for="MusicHouse.Name" class="text-danger"></span>
                 </div>
-                 <div class="form-group">
-                    <form asp-action="Delete" method="post">
-                        <input type="hidden" asp-for="Id" />
-                        <input type="submit" value="Confirm" class="btn btn-danger float-right" />
-                    </form>
-                    <a class="btn btn-outline-secondary" asp-action="Index">Show All</a>
+
+                <div class="form-group mb-3">
+                    <button type="submit" class="btn btn-danger btn-sm float-right d-flex align-items-center justify-content-center px-4 py-2">
+                        <i class="bi bi-trash me-1"></i> Confirm
+                    </button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -61,6 +70,48 @@
         $(document).ready(function () {
             var output = document.getElementById('ProfilePicturePreview');
             output.src = $("#ImageUrl").val();
-        })
+        });
     </script>
 }
+
+<style>
+    body {
+        background-color: #F3F4F8;
+    }
+
+    .text-purple {
+        color: #6C5B7B; /* Lighter purple */
+        margin-bottom: 3px;
+    }
+
+    .form-control.bg-lighter-dark {
+        background-color: #444;
+        border-color: #6C5B7B; /* Lighter purple */
+        color: #FFF;
+    }
+
+    .btn-danger {
+        background-color: #e74c3c;
+        border-color: #e74c3c;
+        color: white;
+        border-radius: 10px;
+    }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+    .btn-outline-secondary {
+        color: #6C5B7B;
+        border-color: #6C5B7B;
+    }
+
+        .btn-outline-secondary:hover {
+            background-color: #6C5B7B;
+            color: white;
+        }
+
+    .border-purple {
+        border-color: #6C5B7B; /* Lighter purple */
+    }
+</style>

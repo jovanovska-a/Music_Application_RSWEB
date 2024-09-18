@@ -116,13 +116,15 @@ namespace MusicApplication.Data
                 {
                     var newAdminUser = new AppUser()
                     {
-                        UserName = "admin",
+                        UserName = "app-admin",
                         Email = adminUserEmail,
                         EmailConfirmed = true,
+
                     };
-                    await userManager.CreateAsync(newAdminUser, "Admin1234");
+                    await userManager.CreateAsync(newAdminUser, "Coding@1234?");
                     await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
                 }
+
                 string appUserEmail = "user@gmail.com";
 
                 var appUser = await userManager.FindByEmailAsync(appUserEmail);
@@ -133,11 +135,13 @@ namespace MusicApplication.Data
                         UserName = "app-user",
                         Email = appUserEmail,
                         EmailConfirmed = true,
+
                     };
-                    await userManager.CreateAsync(newAppUser, "AppUser1234");
+                    await userManager.CreateAsync(newAppUser, "Coding@1234?");
                     await userManager.AddToRoleAsync(newAppUser, UserRoles.User);
                 }
             }
         }
     }
 }
+

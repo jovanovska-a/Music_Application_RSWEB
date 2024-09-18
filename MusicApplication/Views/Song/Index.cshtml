@@ -11,9 +11,12 @@
             <input name="searchString" type="text" class="form-control me-2 bg-dark text-white border-purple" placeholder="Search for a song..." aria-label="Search for a song">
             <button class="btn btn-outline-purple btn-sm" style="border-radius: 4px; width: 35px; d-flex align-items-center justify-content-center" type="submit"><i class="bi bi-search"></i></button>
         </form>
-        <a asp-controller="Song" asp-action="Create" class="btn btn-purple btn-sm d-flex align-items-center justify-content-center" style="height: 40px; width: 120px; border-radius: 25px">
-            <i class="bi bi-plus-circle me-1"></i> Add New
-        </a>
+        @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+        {
+            <a asp-controller="Song" asp-action="Create" class="btn btn-purple btn-sm d-flex align-items-center justify-content-center" style="height: 40px; width: 120px; border-radius: 25px">
+                <i class="bi bi-plus-circle me-1"></i> Add New
+            </a>
+        }
     </div>
 
     <div class="row g-4">
@@ -21,13 +24,16 @@
         {
             <div class="col-lg-3 col-md-4 col-sm-6">
                 <div class="card song-card border-purple shadow-sm">
-                    <img src="@item.ImageUrl" class="card-img-top img-fluid" style="height: 360px;" alt="@item.Name">
+                    <a href="@item.Download"><img src="@item.ImageUrl" class="card-img-top img-fluid" style="height: 360px;" alt="@item.Name"></a>
                     <div class="card-body" style="padding: 18px; padding-bottom: 15px;">
                         <h5 class="card-title text-purple">
                             @item.Name
-                            <a asp-controller="Song" asp-action="Edit" asp-route-id="@item.Id" class="text-white float-end">
-                                <i class="bi bi-pencil-square"></i>
-                            </a>
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("admin"))
+                            {
+                                <a asp-controller="Song" asp-action="Edit" asp-route-id="@item.Id" class="text-white float-end">
+                                    <i class="bi bi-pencil-square"></i>
+                                </a>
+                            }
                         </h5>
                         <p class="card-text mb-2"><strong>Album:</strong> @item.Album.Name</p>
                         <p style="height: 30px;" class="card-text mb-1">
@@ -45,11 +51,14 @@
                         <span class="badge bg-success">AVAILABLE</span>
                     </div>
                     <div class="card-footer d-flex justify-content-between align-items-center" style="padding-bottom: 18px;">
-                        <a asp-controller="Song" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-purple btn-sm d-flex align-items-center justify-content-center" style="width: 110px; height: 35px;">
-                            <i class="bi bi-eye-fill" style="padding-right: 5px;"></i> Details
-                        </a>
-                        <a class="btn btn-purple btn-sm me-2 d-flex align-items-center justify-content-center" style="width: 110px; height: 35px;">
-                        <i class="bi bi-play" style="padding-right: 5px;"></i> Download
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-controller="UserSong" asp-action="DownloadSong" asp-route-id="@item.Id" class="btn btn-purple btn-sm me-2 d-flex align-items-center justify-content-center" style="width: 120px; height: 35px;">
+                                <i class="bi bi-play" style="padding-right: 5px;"></i> Download
+                            </a>
+                        }
+                        <a asp-controller="Song" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-purple btn-sm d-flex align-items-center justify-content-center" style="width: 120px; height: 35px;">
+                                <i class="bi bi-eye-fill" style="padding-right: 5px;"></i> Details
                         </a>
                     </div>
                 </div>

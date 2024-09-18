@@ -34,10 +34,10 @@ namespace MusicApplication.Models
         public MusicHouse MusicHouse { get; set; }
 
         //Reviews
-        public ICollection<Review> Reviews { get; set; }
+        public ICollection<Review>? Reviews { get; set; }
 
         //UserSongs
-        public ICollection<User_Song> UserSongs { get; set; }
+        public ICollection<User_Song>? UserSongs { get; set; }
 
     }
 }

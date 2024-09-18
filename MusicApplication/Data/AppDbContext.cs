@@ -30,6 +30,7 @@ namespace MusicApplication.Data
         public DbSet<Artist_Song> Artists_Songs { get; set; }
         public DbSet<MusicHouse> MusicHouses { get; set; }
         public DbSet<Album> Albums { get; set; }
-
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<User_Song> User_Song { get; set; }
     }
 }

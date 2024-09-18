@@ -12,7 +12,7 @@ namespace MusicApplication.ViewModels
         public string Description { get; set; }
         public string Download { get; set; }
         public double Price { get; set; }
-        public string ? ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
         [NotMapped]
         public IFormFile Image { get; set; }
         public DateOnly Date { get; set; }
@@ -31,3 +31,4 @@ namespace MusicApplication.ViewModels
         public IEnumerable<Artist>? Artists { get; set; }
     }
 }
+
